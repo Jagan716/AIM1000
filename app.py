@@ -2,6 +2,7 @@ import streamlit as st
 import sqlite3
 import pandas as pd
 import matplotlib.pyplot as plt
+from ai import categorize_task
 
 # Database Connection
 conn = sqlite3.connect("tasks.db")
@@ -30,6 +31,9 @@ status = st.selectbox(
 
 if st.button("Save Task"):
 
+
+    ai_category = category
+
     cursor.execute(
         """
         INSERT INTO tasks
@@ -38,11 +42,16 @@ if st.button("Save Task"):
         VALUES (?, ?, ?, ?, ?)
         """,
        (
-        title,
-        description,
-        category,
-        priority,
-        status
+           
+        
+        
+            title,
+            description,
+            ai_category,
+            priority,
+            status
+
+        
         )
     )
 
@@ -51,6 +60,7 @@ if st.button("Save Task"):
     st.success("Task Saved Successfully!")
 
 # Display Tasks
+
 st.subheader("📋 Saved Tasks")
 st.subheader("📊 Tasks by Category")
 
